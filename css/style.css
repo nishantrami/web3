@@ -775,6 +775,7 @@ header.scrolled {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -1067,6 +1068,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1898,6 +1900,39 @@ footer::before {
         flex-direction: column;
         text-align: center;
         padding: 30px;
+    }
+
+    /* Menu Filter Optimization for Mobile */
+    .filter-btns {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 10px 5px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Hide scrollbar for clean UI */
+    }
+
+    .filter-btns::-webkit-scrollbar {
+        display: none;
+    }
+
+    .filter-btn {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        padding: 8px 18px;
+        font-size: 0.9rem;
+        background: var(--bg-surface-light); /* Solid background for stability */
+    }
+
+    .menu-hero, .booking-section {
+        background-attachment: scroll !important;
+    }
+
+    .menu-hero {
+        height: auto;
+        min-height: 40vh;
+        padding: 100px 0;
     }
 
     .menu-hero {
