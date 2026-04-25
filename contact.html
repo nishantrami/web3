@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Feane</title>
+  <meta name="description"
+    content="Get in touch with Feane Restaurant. Reach out for reservations, catering inquiries, or just to say hello.">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header id="header we">
+    <div class="container">
+      <nav class="nav-content">
+        <div class="logo">
+          <a href="index.html">Fea<span>ne</span></a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="booking.html">Book Table</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+        <div class="nav-extra">
+          <div id="authLinks" class="auth-links">
+            <!-- Dynamic Login/Logout -->
+          </div>
+          <div class="cart-toggle" id="cartToggle">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-badge" id="cartBadge">0</span>
+          </div>
+          <a href="menu.html" class="nav-cta">Order Online</a>
+          <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="menu-hero we">
+    <div class="menu-hero-content">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you. Reach out for reservations, feedback, catering inquiries, or just to say hello.</p>
+    </div>
+    <div class="scroll-indicator">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- Contact Info Cards -->
+  <section class="contact-cards-section we">
+    <div class="container">
+      <div class="contact-cards-grid">
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h3>Visit Us</h3>
+          <p>Hill Town Impressa, 116</p>
+          <p>Opp. Nikol Police Station, Ahmedabad</p>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <h3>Call Us</h3>
+          <p>+01 123 456 7890</p>
+          <p>+01 987 654 3210</p>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email Us</h3>
+          <p>nishant@gmail.com</p>
+          <p>support@feane.com</p>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3>Opening Hours</h3>
+          <p>Mon – Fri: 10 AM – 11 PM</p>
+          <p>Sat – Sun: 9 AM – 12 AM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form & Map -->
+  <section class="contact-main we">
+    <div class="container">
+      <div class="contact-wrapper">
+        <!-- Form -->
+        <div class="contact-form-box">
+          <h2>Send Us a Message</h2>
+          <p class="form-subtitle">Have a question or special request? Fill out the form and we'll get back to you
+            within 24 hours.</p>
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contactName">Your Name</label>
+                <input type="text" id="contactName" class="form-control" placeholder="e.g. John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Email Address</label>
+                <input type="email" id="contactEmail" class="form-control" placeholder="e.g. john@email.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contactSubject">Subject</label>
+              <input type="text" id="contactSubject" class="form-control" placeholder="How can we help?" required>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">Your Message</label>
+              <textarea id="contactMessage" class="form-control" rows="6" placeholder="Write your message here..."
+                required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+              <span>Send Message</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+        <!-- Map -->
+        <div class="contact-map-box">
+          <h2>Find Us Here</h2>
+          <div class="map-container">
+            <iframe
+              src="https://maps.google.com/maps?q=Hill%20Town%20Impressa,%20Nikol,%20Ahmedabad,%20Gujarat%20380049&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          <div class="map-overlay-info">
+            <i class="fas fa-utensils"></i>
+            <span>Feane Restaurant — Hill Town Impressa, Nikol, Ahmedabad</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section we">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <div class="faq-icon"><i class="fas fa-parking"></i></div>
+          <h3>Is parking available?</h3>
+          <p>Yes! We offer complimentary valet parking for all dine-in guests. Street parking is also available nearby.
+          </p>
+        </div>
+        <div class="faq-card">
+          <div class="faq-icon"><i class="fas fa-birthday-cake"></i></div>
+          <h3>Do you host private events?</h3>
+          <p>Absolutely! Our private dining room seats up to 40 guests. Contact us for customized event packages and
+            catering.</p>
+        </div>
+        <div class="faq-card">
+          <div class="faq-icon"><i class="fas fa-leaf"></i></div>
+          <h3>Do you offer vegan options?</h3>
+          <p>Yes, we have a dedicated vegan and vegetarian section on our menu with fresh, plant-based dishes crafted
+            daily.</p>
+        </div>
+        <div class="faq-card">
+          <div class="faq-icon"><i class="fas fa-truck"></i></div>
+          <h3>Do you deliver?</h3>
+          <p>We deliver within a 10km radius. Orders can be placed through our website or via popular food delivery
+            apps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container we">
+      <div class="footer-newsletter">
+        <div class="newsletter-text">
+          <h3>Join Our Newsletter</h3>
+          <p>Get the latest updates, offers and tasty news delivered to your inbox.</p>
+        </div>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-col" style="padding-right: 40px;">
+          <div class="logo">
+            <a href="index.html">Fea<span>ne</span></a>
+          </div>
+          <p>Crafting memories through food. Join us for a journey of taste and tradition. We serve with passion and
+            quality.</p>
+          <div class="socials">
+            <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link picsart"><i class="fas fa-camera-retro"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="menu.html"><i class="fas fa-utensils"></i> Our Menu</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="booking.html"><i class="fas fa-calendar-alt"></i> Book Table</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Nikol, Ahmedabad, Gujarat</a></li>
+            <li><a href="#"><i class="fas fa-phone"></i> +01 123 456 7890</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> nishant@gmail.com</a></li>
+            <li><a href="#"><i class="fas fa-clock"></i> 10:00 AM - 10:00 PM</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Our Gallery</h3>
+          <div class="insta-grid">
+            <div class="insta-img"><img src="img/f1.png" alt=""></div>
+            <div class="insta-img"><img src="img/f2.png" alt=""></div>
+            <div class="insta-img"><img src="img/f3.png" alt=""></div>
+            <div class="insta-img"><img src="img/f4.png" alt=""></div>
+            <div class="insta-img"><img src="img/f5.png" alt=""></div>
+            <div class="insta-img"><img src="img/f6.png" alt=""></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Feane Restaurant. All Rights Reserved.</p>
+        <div class="bottom-links">
+          <a href="admin-login.html">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Contact Form Submit Animation
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+        submitBtn.style.background = '#22c55e';
+        submitBtn.style.pointerEvents = 'none';
+        setTimeout(() => {
+          submitBtn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
+          submitBtn.style.background = '';
+          submitBtn.style.pointerEvents = '';
+          contactForm.reset();
+        }, 3000);
+      });
+    }
+  </script>
+</body>
+
+</html>

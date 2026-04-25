@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Feane</title>
+    <meta name="description" content="Complete your order with Feane. Secure payment and fast delivery.">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- html2pdf.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="checkout-page we">
+    <!-- Header -->
+    <header id="header" class="scrolled">
+        <div class="container">
+            <nav class="nav-content">
+                <div class="logo">
+                    <a href="index.html">Fea<span>ne</span></a>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-extra">
+                    <div id="authLinks" class="auth-links">
+                        <!-- Dynamic Login/Logout -->
+                    </div>
+                    <div class="cart-toggle" id="cartToggle">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </div>
+                    <a href="menu.html" class="nav-cta">Order Online</a>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="checkout-main we">
+        <div class="container">
+            <!-- Checkout Progress -->
+            <div class="checkout-steps">
+                <div class="step active" data-step="1">
+                    <span class="step-num">1</span>
+                    <span class="step-label">Review</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <span class="step-num">2</span>
+                    <span class="step-label">Delivery</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <span class="step-num">3</span>
+                    <span class="step-label">Payment</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <span class="step-num">4</span>
+                    <span class="step-label">Confirm</span>
+                </div>
+            </div>
+
+            <div class="checkout-grid we">
+                <!-- Left Side: Order & Payment Info -->
+                <div class="checkout-left">
+                    <!-- Section 1: Order Summary List -->
+                    <div class="checkout-section active" id="detailsSection">
+                        <h2>Review Your Order</h2>
+                        <div class="full-cart-list" id="fullCartItems">
+                            <!-- Items from localstorage -->
+                        </div>
+                        <div class="checkout-actions">
+                            <button class="btn btn-primary" onclick="nextStep(2)">Continue to Delivery <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Delivery Details -->
+                    <div class="checkout-section we" id="deliverySection">
+                        <h2>Delivery Information</h2>
+                        <form class="checkout-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" placeholder="John" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Doe" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Street Address</label>
+                                <input type="text" class="form-control" placeholder="123 Beast Street" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" placeholder="New York" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Order Note (Optional)</label>
+                                <textarea class="form-control" rows="3" placeholder="Special instructions (e.g. deliver to back door, no onions)"></textarea>
+                            </div>
+                        </form>
+                        <div class="checkout-actions">
+                            <button class="btn btn-outline" onclick="nextStep(1)"><i class="fas fa-chevron-left"></i> Back</button>
+                            <button class="btn btn-primary" onclick="nextStep(3)">Continue to Payment <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Payment Gateway (The "Perfect" Part) -->
+                    <div class="checkout-section we" id="paymentSection">
+                        <h2>Select Payment Method</h2>
+                        <div class="payment-methods">
+                            <label class="payment-option selected">
+                                <input type="radio" name="payment" value="card" checked>
+                                <div class="payment-box">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Credit / Debit Card</span>
+                                </div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="upi">
+                                <div class="payment-box">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>UPI (GPay / PhonePe)</span>
+                                </div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="cod">
+                                <div class="payment-box">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Cash on Delivery</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Card Input (Visible by default) -->
+                        <div class="payment-details we" id="cardDetails">
+                            <div class="beast-card-ui">
+                                <div class="card-logo">VISA</div>
+                                <div class="card-number-display">**** **** **** 1234</div>
+                                <div class="card-footer-ui">
+                                    <div class="card-holder-ui">CARD HOLDER</div>
+                                    <div class="card-expiry-ui">EXPIRES 12/25</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cardholder Name</label>
+                                <input type="text" class="form-control" placeholder="NAME ON CARD">
+                            </div>
+                            <div class="form-group">
+                                <label>Card Number</label>
+                                <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Expiry Date</label>
+                                    <input type="text" class="form-control" placeholder="MM / YY">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input type="text" class="form-control" placeholder="***">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI Input (Hidden) -->
+                        <div class="payment-details" id="upiDetails" style="display:none;">
+                            <div class="upi-box">
+                                <i class="fas fa-qrcode"></i>
+                                <p>Enter your UPI ID or Scan QR to pay</p>
+                                <input type="text" class="form-control" placeholder="username@upi">
+                            </div>
+                        </div>
+
+                        <div class="checkout-actions">
+                            <button class="btn btn-outline" onclick="nextStep(2)"><i class="fas fa-chevron-left"></i> Back</button>
+                            <button class="btn btn-primary" onclick="prepareConfirmation()">Review Order <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Final Confirmation -->
+                <div class="checkout-section we" id="confirmSection">
+                    <h2>Final Confirmation</h2>
+                    <div class="confirmation-summary">
+                        <div class="confirm-card">
+                            <div class="confirm-row">
+                                <div class="confirm-col">
+                                    <h3><i class="fas fa-map-marker-alt"></i> Delivery Address</h3>
+                                    <p id="confAddress">Loading...</p>
+                                </div>
+                                <div class="confirm-col">
+                                    <h3><i class="fas fa-credit-card"></i> Payment Mode</h3>
+                                    <p id="confPayment">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="confirm-items" id="confItems">
+                            <!-- Items will be injected -->
+                        </div>
+                    </div>
+                    <div class="checkout-actions">
+                        <button class="btn btn-outline" onclick="nextStep(3)"><i class="fas fa-chevron-left"></i> Back</button>
+                        <button class="btn btn-primary btn-beast" onclick="processFinalOrder(this)">Confirm & Place Order <i class="fas fa-check-circle"></i></button>
+                    </div>
+                </div>
+
+                <!-- Right Side: Order Summary Stick -->
+                <div class="checkout-right we">
+                    <div class="summary-mobile-toggle show-mobile" id="sumToggleBtn">
+                        <div class="toggle-left">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Show Order Summary</span>
+                        </div>
+                        <span id="mobileTotal">₹0</span>
+                        <i class="fas fa-chevron-down toggle-arrow"></i>
+                    </div>
+                    <div class="order-summary-box" id="orderSummaryBox">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="summarySubtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>GST (5%)</span>
+                            <span id="summaryTax">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee</span>
+                            <span>₹40</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total">
+                            <span>Total Payable</span>
+                            <span id="summaryTotal">₹0</span>
+                        </div>
+                        <div class="secure-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure SSL Encrypted Payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="success-overlay we" id="successOverlay">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>Order Placed Successfully!</h2>
+            <p class="order-id" id="displayOrderId">Order ID: #FEANE-000000</p>
+            
+            <div class="order-success-details" id="orderSuccessDetails">
+                <!-- Order details will be injected here -->
+            </div>
+
+            <p style="margin-top: 20px; font-size: 0.9rem;">Your delicious food is being prepared and will be delivered shortly.</p>
+            <div class="success-actions">
+                <a href="index.html" class="btn btn-primary">Back to Home</a>
+                <button onclick="downloadReceipt()" class="btn btn-beast" style="margin: 10px 0;"><i class="fas fa-file-pdf"></i> Download Receipt</button>
+                <a href="menu.html" class="btn btn-outline">Order More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container we">
+            <div class="footer-newsletter">
+                <div class="newsletter-text">
+                    <h3>Join Our Newsletter</h3>
+                    <p>Get the latest updates, offers and tasty news delivered to your inbox.</p>
+                </div>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-col" style="padding-right: 40px;">
+                    <div class="logo">
+                        <a href="index.html">Fea<span>ne</span></a>
+                    </div>
+                    <p>Crafting memories through food. Join us for a journey of taste and tradition. We serve with passion and quality.</p>
+                    <div class="socials">
+                        <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link picsart"><i class="fas fa-camera-retro"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="menu.html"><i class="fas fa-utensils"></i> Our Menu</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="booking.html"><i class="fas fa-calendar-alt"></i> Book Table</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Street, NY, USA</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +01 123 456 7890</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> contact@feane.com</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> 10:00 AM - 10:00 PM</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Our Gallery</h3>
+                    <div class="insta-grid">
+                        <div class="insta-img"><img src="img/f1.png" alt=""></div>
+                        <div class="insta-img"><img src="img/f2.png" alt=""></div>
+                        <div class="insta-img"><img src="img/f3.png" alt=""></div>
+                        <div class="insta-img"><img src="img/f4.png" alt=""></div>
+                        <div class="insta-img"><img src="img/f5.png" alt=""></div>
+                        <div class="insta-img"><img src="img/f6.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Feane Restaurant. All Rights Reserved.</p>
+                <div class="bottom-links">
+                    <a href="admin-login.html">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Checkout specific logic
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckoutItems();
+            updateSummary();
+            
+            // Listen for global cart updates
+            window.addEventListener('cartUpdated', () => {
+                renderCheckoutItems();
+                updateSummary();
+            });
+
+            // Summary mobile toggle
+            const sumToggleBtn = document.getElementById('sumToggleBtn');
+            const orderSummaryBox = document.getElementById('orderSummaryBox');
+            if(sumToggleBtn) {
+                sumToggleBtn.addEventListener('click', () => {
+                    sumToggleBtn.classList.toggle('active');
+                    orderSummaryBox.classList.toggle('active');
+                    const span = sumToggleBtn.querySelector('.toggle-left span');
+                    span.textContent = orderSummaryBox.classList.contains('active') ? 'Hide Order Summary' : 'Show Order Summary';
+                });
+            }
+
+            // Payment method toggle
+            const options = document.querySelectorAll('.payment-option input');
+            options.forEach(opt => {
+                opt.addEventListener('change', () => {
+                    document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+                    opt.closest('.payment-option').classList.add('selected');
+                    
+                    // Show/Hide details
+                    document.getElementById('cardDetails').style.display = opt.value === 'card' ? 'block' : 'none';
+                    document.getElementById('upiDetails').style.display = opt.value === 'upi' ? 'block' : 'none';
+                });
+            });
+
+            // Card Sync Logic
+            const cardNameInput = document.querySelector('input[placeholder="NAME ON CARD"]');
+            const cardNumberInput = document.querySelector('input[placeholder="0000 0000 0000 0000"]');
+            const cardExpiryInput = document.querySelector('input[placeholder="MM / YY"]');
+            
+            const cardNameDisplay = document.querySelector('.card-holder-ui');
+            const cardNumberDisplay = document.querySelector('.card-number-display');
+            const cardExpiryDisplay = document.querySelector('.card-expiry-ui');
+
+            if(cardNameInput && cardNameDisplay) {
+                cardNameInput.addEventListener('input', (e) => {
+                    cardNameDisplay.setAttribute('data-value', e.target.value.toUpperCase() || 'CARD HOLDER');
+                });
+            }
+            if(cardNumberInput && cardNumberDisplay) {
+                cardNumberInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+                    let formatted = val.match(/.{1,4}/g)?.join(' ') || '';
+                    e.target.value = formatted;
+                    cardNumberDisplay.textContent = formatted || '**** **** **** ****';
+                });
+            }
+            if(cardExpiryInput && cardExpiryDisplay) {
+                cardExpiryInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+                    if(val.length > 2) val = val.substring(0, 2) + '/' + val.substring(2);
+                    e.target.value = val;
+                    cardExpiryDisplay.setAttribute('data-value', val || 'MM / YY');
+                });
+            }
+        });
+
+        window.processFinalOrder = function(btn) {
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+            const successOverlay = document.getElementById('successOverlay');
+            const orderIdEl = document.getElementById('displayOrderId');
+            
+            // Collect order details
+            const cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = Math.round(subtotal * 0.05);
+            const total = subtotal + tax + 40;
+            const allInputs = document.querySelectorAll('#deliverySection .form-control');
+            const randomId = `#FEANE-${Math.floor(100000 + Math.random() * 900000)}`;
+
+            const paymentMode = document.querySelector('input[name="payment"]:checked')?.value || "card";
+            let paymentText = "Credit / Debit Card";
+            if(paymentMode === 'upi') paymentText = "UPI Payment";
+            if(paymentMode === 'cod') paymentText = "Cash on Delivery";
+
+            const newOrder = {
+                id: randomId,
+                items: cartItems,
+                customer: {
+                    name: `${allInputs[0]?.value} ${allInputs[1]?.value}`,
+                    phone: allInputs[4]?.value,
+                    address: allInputs[2]?.value,
+                    note: allInputs[5]?.value || "None"
+                },
+                paymentMethod: paymentText,
+                total: total,
+                status: 'pending',
+                date: new Date().toISOString()
+            };
+
+            // Save to total orders
+            const totalOrders = JSON.parse(localStorage.getItem('feane_orders')) || [];
+            totalOrders.push(newOrder);
+            localStorage.setItem('feane_orders', JSON.stringify(totalOrders));
+
+            setTimeout(() => {
+                if(orderIdEl) {
+                    orderIdEl.textContent = `Order ID: ${randomId}`;
+                }
+                // Store current order for receipt download
+                window.lastOrder = newOrder;
+
+                // Render detail summary in success modal
+                const detailsContainer = document.getElementById('orderSuccessDetails');
+                if(detailsContainer) {
+                    const itemsList = newOrder.items.map(item => `
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px;">
+                            <span>${item.name} x ${item.quantity}</span>
+                            <span style="font-weight: 600;">₹${item.price * item.quantity}</span>
+                        </div>
+                    `).join('');
+
+                    detailsContainer.innerHTML = `
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 15px; border-radius: 15px; text-align: left; margin: 20px 0;">
+                            <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 0.8rem; text-transform: uppercase;">Order Items</h4>
+                            ${itemsList}
+                            <div style="border-top: 1px solid var(--glass-border); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between; font-weight: 800; color: var(--primary);">
+                                <span>TOTAL PAYMENT</span>
+                                <span>₹${newOrder.total}</span>
+                            </div>
+                        </div>
+                        <div style="text-align: left; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 5px;">
+                            <div style="display: flex; gap: 10px;">
+                                <i class="fas fa-map-marker-alt" style="margin-top: 3px; color: var(--primary);"></i>
+                                <span>Delivering to: <strong>${newOrder.customer.address}</strong></span>
+                            </div>
+                            ${newOrder.customer.note !== "None" ? `
+                            <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                <i class="fas fa-sticky-note" style="margin-top: 3px; color: var(--primary);"></i>
+                                <span>Note: <em>"${newOrder.customer.note}"</em></span>
+                            </div>` : ''}
+                        </div>
+                    `;
+                }
+                
+                successOverlay.classList.add('active');
+                localStorage.removeItem('feane_cart'); // Clear cart
+                if (window.updateBadge) window.updateBadge();
+            }, 2000);
+        };
+
+        window.downloadReceipt = function() {
+            if (!window.lastOrder) {
+                alert("Order details not found.");
+                return;
+            }
+
+            const order = window.lastOrder;
+            const element = document.createElement('div');
+            element.style.padding = '50px';
+            element.style.color = '#1a1a1a';
+            element.style.fontFamily = "'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            element.style.width = '800px';
+            element.style.background = '#ffffff';
+            element.style.position = 'relative';
+
+            const itemsHtml = order.items.map(item => `
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                    <td style="padding: 15px 10px;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="${item.img}" style="width: 50px; height: 50px; border-radius: 10px; object-fit: cover; border: 1px solid #eee;">
+                            <div>
+                                <div style="font-weight: 700; color: #333;">${item.name}</div>
+                                <div style="font-size: 0.8rem; color: #999;">Premium Quality</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 15px 10px; text-align: center; font-weight: 600;">${item.quantity}</td>
+                    <td style="padding: 15px 10px; text-align: right; color: #888;">₹${item.price}</td>
+                    <td style="padding: 15px 10px; text-align: right; font-weight: 700; color: #ffbe33;">₹${item.price * item.quantity}</td>
+                </tr>
+            `).join('');
+
+            element.innerHTML = `
+                <!-- Background Decoration -->
+                <div style="position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: radial-gradient(circle at top right, #fff8e1 0%, transparent 70%); z-index: 0; pointer-events: none;"></div>
+                
+                <div style="position: relative; z-index: 1;">
+                    <!-- Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; border-bottom: 4px solid #ffbe33; padding-bottom: 20px;">
+                        <div>
+                            <h1 style="color: #0f172a; margin: 0; font-size: 2.5rem; letter-spacing: -1px;">FEA<span style="color: #ffbe33;">NE</span></h1>
+                            <p style="margin: 5px 0; color: #64748b; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">The Art of Fine Dining</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 700; display: inline-block;">INVOICE</div>
+                            <p style="margin: 8px 0 0; color: #64748b; font-size: 0.9rem;"># ${order.id}</p>
+                        </div>
+                    </div>
+
+                    <!-- Info Grid -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px;">
+                        <div style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                            <h3 style="margin: 0 0 15px 0; font-size: 1rem; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">CUSTOMER DETAILS</h3>
+                            <p style="margin: 5px 0;"><strong>Name:</strong> ${order.customer.name}</p>
+                            <p style="margin: 5px 0;"><strong>Phone:</strong> ${order.customer.phone}</p>
+                            <p style="margin: 5px 0;"><strong>Address:</strong> ${order.customer.address}</p>
+                            ${order.customer.note !== "None" ? `<p style="margin: 5px 0; border-top: 1px dashed #ddd; padding-top: 5px;"><strong>Note:</strong> ${order.customer.note}</p>` : ''}
+                        </div>
+                        <div style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                            <h3 style="margin: 0 0 15px 0; font-size: 1rem; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">PAYMENT OVERVIEW</h3>
+                            <p style="margin: 5px 0;"><strong>Method:</strong> ${order.paymentMethod}</p>
+                            <p style="margin: 5px 0;"><strong>Status:</strong> <span style="color: #10b981; font-weight: 700;">PAID SUCCESSFUL</span></p>
+                            <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date(order.date).toLocaleDateString()}</p>
+                            <p style="margin: 5px 0;"><strong>Time:</strong> ${new Date(order.date).toLocaleTimeString()}</p>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
+                        <thead>
+                            <tr style="background: #0f172a; color: #ffffff;">
+                                <th style="padding: 15px 10px; text-align: left; border-radius: 10px 0 0 10px;">Items Ordered</th>
+                                <th style="padding: 15px 10px; text-align: center;">Qty</th>
+                                <th style="padding: 15px 10px; text-align: right;">Price</th>
+                                <th style="padding: 15px 10px; text-align: right; border-radius: 0 10px 10px 0;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHtml}
+                        </tbody>
+                    </table>
+
+                    <!-- Summary -->
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div>
+                            <div style="text-align: center; margin-left: 20px;">
+                                <div style="width: 100px; height: 100px; border: 2px solid #f0f0f0; border-radius: 15px; padding: 10px; background: #fff; margin-bottom: 10px;">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${order.id}" style="width: 100%; height: 100%;">
+                                </div>
+                                <p style="font-size: 0.7rem; color: #94a3b8; margin: 0;">Scan to Verify Order</p>
+                            </div>
+                        </div>
+                        <div style="width: 300px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #64748b;">
+                                <span>Subtotal</span>
+                                <span>₹${order.total - Math.round((order.total - 40) / 1.05 * 0.05) - 40}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #64748b;">
+                                <span>Tax (GST 5%)</span>
+                                <span>₹${Math.round((order.total - 40) / 1.05 * 0.05)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; color: #64748b;">
+                                <span>Delivery Fee</span>
+                                <span>₹40</span>
+                            </div>
+                            <div style="background: #ffbe33; color: #0f172a; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 800; font-size: 1.1rem;">NET PAYABLE</span>
+                                <span style="font-weight: 800; font-size: 1.8rem;">₹${order.total}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px;">
+                        <div style="color: #94a3b8; font-size: 0.8rem;">
+                            <p style="margin: 0;">Authorized Signature</p>
+                            <div style="margin-top: 10px; border-bottom: 1px solid #e2e8f0; width: 150px; height: 30px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Jon_Kirsch_Signature.png" style="height: 100%; opacity: 0.3; filter: grayscale(1);">
+                            </div>
+                        </div>
+                        <div style="text-align: right; transform: rotate(-5deg); border: 4px double #10b981; color: #10b981; padding: 5px 15px; font-weight: 800; border-radius: 5px; opacity: 0.8;">
+                            PAID SYSTEM VERIFIED
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 40px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 30px;">
+                        <p style="font-weight: 700; color: #0f172a; margin-bottom: 10px;">HAVE A DELICIOUS MEAL!</p>
+                        <p style="color: #64748b; font-size: 0.9rem; max-width: 400px; margin: 0 auto;">This is a computer generated invoice and does not require a signature. For any queries, please contact our support team.</p>
+                        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 30px; font-size: 0.8rem; color: #94a3b8;">
+                            <span>www.feane.com</span>
+                            <span>support@feane.com</span>
+                            <span>+01 123 456 7890</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const opt = {
+                margin:       0.3,
+                filename:     `Feane-Premium-Receipt-${order.id}.pdf`,
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 3, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        };
+
+        function renderCheckoutItems() {
+            const container = document.getElementById('fullCartItems');
+            const cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            
+            // Update Title Item Count
+            const reviewTitle = document.querySelector('#detailsSection h2');
+            if (reviewTitle) {
+                reviewTitle.innerHTML = `Review Your Order <span class="item-count-badge">${cartItems.length} Items</span>`;
+            }
+
+            if (cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart-msg">
+                        <i class="fas fa-shopping-basket" style="font-size: 4rem; color: var(--glass-border); margin-bottom: 20px;"></i>
+                        <p>Your cart is empty.</p>
+                        <a href="menu.html" class="btn btn-primary" style="margin-top: 20px;">Go to Menu</a>
+                    </div>`;
+                updateSummary();
+                return;
+            }
+
+            container.innerHTML = '';
+            cartItems.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.classList.add('item-card-row');
+                el.style.animationDelay = `${index * 0.1}s`;
+                el.innerHTML = `
+                    <div class="item-main">
+                        <div class="item-img-wrap">
+                            <img src="${item.img}" alt="${item.name}">
+                        </div>
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <p class="unit-price">₹${item.price} each</p>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="cart-item-controls">
+                            <button class="qty-btn" onclick="changeCheckoutQty(${index}, -1)"><i class="fas fa-minus"></i></button>
+                            <span class="qty-val">${item.quantity}</span>
+                            <button class="qty-btn" onclick="changeCheckoutQty(${index}, 1)"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="item-price-wrap">
+                            <span class="total-price">₹${item.price * item.quantity}</span>
+                            <button class="remove-item-btn" onclick="removeCheckoutItem(${index})"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+            
+            // Clear Cart Button
+            const clearBtn = document.createElement('button');
+            clearBtn.className = 'btn-text clear-all-btn';
+            clearBtn.innerHTML = '<i class="fas fa-trash"></i> Clear All Items';
+            clearBtn.onclick = () => {
+                if(confirm("Are you sure you want to clear your cart?")) {
+                    localStorage.removeItem('feane_cart');
+                    renderCheckoutItems();
+                    updateSummary();
+                    if(window.updateBadge) window.updateBadge();
+                }
+            };
+            container.appendChild(clearBtn);
+        }
+
+        window.removeCheckoutItem = function(index) {
+            let cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            cartItems.splice(index, 1);
+            localStorage.setItem('feane_cart', JSON.stringify(cartItems));
+            renderCheckoutItems();
+            updateSummary();
+            if (window.updateBadge) window.updateBadge();
+        };
+
+        window.changeCheckoutQty = function(index, delta) {
+            let cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            cartItems[index].quantity += delta;
+            if (cartItems[index].quantity <= 0) {
+                cartItems.splice(index, 1);
+            }
+            localStorage.setItem('feane_cart', JSON.stringify(cartItems));
+            renderCheckoutItems();
+            updateSummary();
+            // Also update header badge if main.js is loaded
+            if (window.updateBadge) window.updateBadge();
+        };
+
+        function updateSummary() {
+            const cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = Math.round(subtotal * 0.05);
+            const delivery = subtotal > 0 ? 40 : 0;
+            const total = subtotal + tax + delivery;
+
+            document.getElementById('summarySubtotal').textContent = `₹${subtotal}`;
+            document.getElementById('summaryTax').textContent = `₹${tax}`;
+            document.getElementById('summaryTotal').textContent = `₹${total}`;
+            
+            const mobileTotal = document.getElementById('mobileTotal');
+            if(mobileTotal) mobileTotal.textContent = `₹${total}`;
+        }
+
+        function validateCurrentSection() {
+            const activeSection = document.querySelector('.checkout-section.active');
+            if (!activeSection) return true;
+            
+            const inputs = activeSection.querySelectorAll('.form-control[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                // Basic required check
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
+                } 
+                // Phone check
+                else if (input.type === 'tel' && !/^\d{10}$/.test(input.value.replace(/\D/g,''))) {
+                    isValid = false;
+                    input.classList.add('is-invalid');
+                }
+                else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                if (window.showToast) window.showToast("Please check the red fields.");
+                else alert("Please fill all required fields correctly.");
+            }
+            return isValid;
+        }
+
+        function nextStep(stepNum) {
+            const currentStep = document.querySelector('.step.active');
+            const currentStepVal = currentStep ? parseInt(currentStep.dataset.step) : 1;
+
+            // Validate when moving forward
+            if (stepNum > currentStepVal) {
+                if (!validateCurrentSection()) return;
+            }
+
+            const cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            if (cartItems.length === 0 && stepNum > 1) {
+                alert("Please add items to your cart first!");
+                return;
+            }
+
+            // Update UI sections
+            document.querySelectorAll('.checkout-section').forEach(s => s.classList.remove('active'));
+            if (stepNum === 1) document.getElementById('detailsSection')?.classList.add('active');
+            if (stepNum === 2) document.getElementById('deliverySection')?.classList.add('active');
+            if (stepNum === 3) document.getElementById('paymentSection')?.classList.add('active');
+            if (stepNum === 4) document.getElementById('confirmSection')?.classList.add('active');
+
+            // Update Steps Progress
+            document.querySelectorAll('.step').forEach(s => {
+                const sVal = parseInt(s.dataset.step);
+                s.classList.remove('active', 'completed');
+                if (sVal < stepNum) s.classList.add('completed');
+                if (sVal === stepNum) s.classList.add('active');
+            });
+
+            // Scroll to top of section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.prepareConfirmation = function() {
+            // Get data with correct indices inclusive of Note
+            const allInputs = document.querySelectorAll('#deliverySection .form-control');
+            const firstName = allInputs[0]?.value || "";
+            const lastName = allInputs[1]?.value || "";
+            const address = allInputs[2]?.value || "Street";
+            const city = allInputs[3]?.value || "";
+            const phone = allInputs[4]?.value || "";
+            const note = allInputs[5]?.value || "None";
+            
+            const paymentMode = document.querySelector('input[name="payment"]:checked')?.value || "card";
+            
+            let paymentText = "Credit / Debit Card";
+            if(paymentMode === 'upi') paymentText = "UPI Payment";
+            if(paymentMode === 'cod') paymentText = "Cash on Delivery";
+
+            document.getElementById('confAddress').innerHTML = `
+                <strong>${firstName} ${lastName}</strong><br>
+                ${address}, ${city}<br>
+                <i class="fas fa-phone-alt"></i> ${phone}<br>
+                <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--glass-border); font-size:0.9rem; color:var(--text-muted);">
+                    <i class="fas fa-sticky-note"></i> Note: ${note}
+                </div>
+            `;
+            document.getElementById('confPayment').textContent = paymentText;
+
+            // Render mini cart summary in confirmation
+            const confItemsContainer = document.getElementById('confItems');
+            const cartItems = JSON.parse(localStorage.getItem('feane_cart')) || [];
+            confItemsContainer.innerHTML = cartItems.map(item => `
+                <div style="display:flex; justify-content:center; gap:20px; padding:10px 0; border-bottom:1px solid var(--glass-border);">
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span style="font-weight:700;">₹${item.price * item.quantity}</span>
+                </div>
+            `).join('') || '<p>No items</p>';
+
+            nextStep(4);
+        };
+    </script>
+</body>
+</html>

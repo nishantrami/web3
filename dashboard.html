@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Command Center | Feane Restaurant</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;800&display=swap"
+        rel="stylesheet">
+    <!-- Custom Admin Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout we">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar we">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="index.html">Fea<span>ne</span></a>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-section="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </div>
+                <div class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </div>
+                <div class="nav-item" data-section="menu">
+                    <i class="fas fa-utensils"></i>
+                    <span>Menu Management</span>
+                </div>
+                <div class="nav-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </div>
+                <div class="nav-item" data-section="bookings">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Table Bookings</span>
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" onclick="auth.logout()"
+                    style="width: 100%; border: none; background: transparent; text-align: left;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main we">
+            <!-- Topbar -->
+            <header class="admin-topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="adminSidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 id="sectionTitle">Dashboard Overview</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="admin-profile">
+                        <div class="admin-profile-info">
+                            <span>Admin Official</span>
+                            <small>Restaurant Manager</small>
+                        </div>
+                        <img src="img/about-img.png" alt="Admin">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Content -->
+            <div class="admin-content">
+
+                <!-- Overview Section -->
+                <section id="overviewSection" class="content-section active we">
+                    <div class="welcome-banner">
+                        <div class="welcome-text">
+                            <h1
+                                style="color: #000; font-size: 2.5rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 8px;">
+                                Beast Dashboard</h1>
+                            <p style="color: #64748b; font-size: 1.1rem;">Operational status: <span
+                                    style="color: #10b981; font-weight: 700;">OPTIMAL</span></p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span>Total Orders</span>
+                                <h3 id="statTotalOrders">0</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fas fa-indian-rupee-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span>Total Revenue</span>
+                                <h3 id="statTotalRevenue">₹0</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span>Pending Orders</span>
+                                <h3 id="statPendingOrders">0</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon red">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span>Total Customers</span>
+                                <h3 id="statTotalUsers">0</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange" style="background: rgba(147, 51, 234, 0.1); color: #9333ea;">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span>Total Menu</span>
+                                <h3 id="statTotalMenu">0</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span>Total Bookings</span>
+                                <h3 id="statTotalBookings">0</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-table-card">
+                        <div class="card-header">
+                            <h3>Recent Orders</h3>
+                            <button class="btn-primary-beast" onclick="switchSection('orders')">View All <i
+                                    class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="recentOrdersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Status</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section id="ordersSection" class="content-section we">
+                    <div class="data-table-card">
+                        <div class="card-header">
+                            <h3>All Orders</h3>
+                            <div class="filter-btns" style="margin-bottom: 0;">
+                                <button class="filter-btn active" onclick="filterOrders('all')">All</button>
+                                <button class="filter-btn" onclick="filterOrders('pending')">Pending</button>
+                                <button class="filter-btn" onclick="filterOrders('delivered')">Delivered</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="allOrdersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Menu Management Section -->
+                <section id="menuSection" class="content-section we">
+                    <div class="data-table-card">
+                        <div class="card-header">
+                            <h3>Menu Items</h3>
+                            <button class="btn-primary-beast" onclick="openMenuModal()">Add New Item <i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="menuTable">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Users Section -->
+                <section id="usersSection" class="content-section we">
+                    <div class="data-table-card">
+                        <div class="card-header">
+                            <h3>Registered Customers</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bookings Section -->
+                <section id="bookingsSection" class="content-section we">
+                    <div class="data-table-card">
+                        <div class="card-header">
+                            <h3>Table Reservations</h3>
+                            <button class="btn btn-primary" onclick="renderBookingsTable()">Refresh List <i class="fas fa-sync"></i></button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="bookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Res ID</th>
+                                        <th>Customer</th>
+                                        <th>Guests</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settingsSection" class="content-section we">
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>General Configuration</h3>
+                            </div>
+                            <div class="settings-body">
+                                <form id="generalSettingsForm" class="admin-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Restaurant Name</label>
+                                            <input type="text" class="form-control" value="Feane Restaurant">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Store Tagline</label>
+                                            <input type="text" class="form-control"
+                                                value="Exquisite Flavors, Unforgettable Moments">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Contact Email</label>
+                                            <input type="email" class="form-control" value="nishant@gmail.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Support Phone</label>
+                                            <input type="text" class="form-control" value="+01 123 456 7890">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Address</label>
+                                        <textarea class="form-control" rows="3">123 Street, NY, USA</textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="showToast('General settings saved!')">Save General Settings</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-clock"></i> Operational Hours</h3>
+                            </div>
+                            <div class="settings-body">
+                                <form class="admin-form">
+                                    <div class="hours-grid">
+                                        <div class="hours-item">
+                                            <label>Opening Time</label>
+                                            <div class="input-with-icon">
+                                                <i class="fas fa-clock"></i>
+                                                <input type="time" class="form-control" value="10:00">
+                                            </div>
+                                        </div>
+                                        <div class="hours-item">
+                                            <label>Closing Time</label>
+                                            <div class="input-with-icon">
+                                                <i class="fas fa-moon"></i>
+                                                <input type="time" class="form-control" value="22:00">
+                                            </div>
+                                        </div>
+                                        <div class="hours-item">
+                                            <label>Store Status</label>
+                                            <div class="status-select-wrap">
+                                                <select class="form-control" id="storeStatusSelect">
+                                                    <option value="open">Open for Business</option>
+                                                    <option value="closed">Closed / Vacation</option>
+                                                    <option value="busy">Busy / High Demand</option>
+                                                </select>
+                                                <div class="status-indicator"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="showToast('Operational hours updated!')">Update Schedule</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="admin-modal we" id="menuModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Menu Item</h3>
+                <i class="fas fa-times close-modal" onclick="closeMenuModal()"></i>
+            </div>
+            <form id="menuForm" class="booking-form">
+                <input type="hidden" id="menuId">
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" id="itemName" class="form-control" required>
+                </div>
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="itemPrice" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="itemCategory" class="form-control">
+                            <option value="Burger">Burger</option>
+                            <option value="Pizza">Pizza</option>
+                            <option value="Pasta">Pasta</option>
+                            <option value="Fries">Fries</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="itemDesc" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image URL (e.g. img/f1.png)</label>
+                    <input type="text" id="itemImg" class="form-control" value="img/f1.png">
+                </div>
+                <button type="submit" class="btn-primary-beast"
+                    style="width: 100%; margin-top: 20px; justify-content: center;">Save Item <i
+                        class="fas fa-save"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/menuData.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
