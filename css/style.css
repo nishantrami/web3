@@ -185,10 +185,12 @@ header.scrolled {
 /* --- Hero Section --- */
 .hero {
     height: 100vh;
+    height: 100dvh;
     background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('../img/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     position: relative;
@@ -236,6 +238,7 @@ header.scrolled {
 .btn-primary:hover {
     background: var(--primary-hover);
     transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3);
 }
 
 .btn-outline {
@@ -1849,6 +1852,16 @@ footer::before {
         font-size: 1.5rem;
     }
 
+    .nav-links .mobile-order-btn {
+        display: block !important;
+        background: var(--primary);
+        color: var(--bg-dark);
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+
     .nav-cta {
         padding: 8px 18px;
         font-size: 0.85rem;
@@ -1856,6 +1869,18 @@ footer::before {
 
     .hero h1 {
         font-size: 2.8rem;
+    }
+
+    .hero {
+        background-attachment: scroll !important; /* Forces background to stay still on mobile */
+        height: auto;
+        min-height: 80dvh;
+        padding: 120px 0 80px;
+    }
+
+    .hero-btns .btn {
+        transform: none !important;
+        transition: background 0.3s ease;
     }
 
     .section-header h2 {
@@ -1933,7 +1958,7 @@ footer::before {
 
     .nav-cta {
         display: none;
-        /* Hide order button on very small phones to save space for cart */
+        /* Hidden on very small phones to avoid overlap, moved to drawer */
     }
 
     .form-row {
@@ -1951,6 +1976,19 @@ footer::before {
 
     .hero-btns {
         flex-direction: column;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        background-attachment: scroll;
+    }
+
+    /* Set button background color to match site or have solid contrast that doesn't 'move' */
+    .btn-outline {
+        background: var(--bg-dark); /* Sync with website background color */
+        border-color: var(--glass-border);
     }
 
     .bottom-links {
@@ -2341,20 +2379,24 @@ footer::before {
 }
 
 .checkout-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+@media (min-width: 992px) {
+    .checkout-grid {
+        grid-template-columns: 1fr 400px;
+        align-items: start;
+    }
 }
 
 .checkout-left {
     width: 100%;
-    max-width: 850px;
 }
 
 .checkout-right {
     width: 100%;
-    max-width: 850px;
 }
 
 .checkout-section {
@@ -2550,6 +2592,7 @@ footer::before {
 }
 
 .beast-card-ui {
+    width: 100%;
     max-width: 420px;
     height: 240px;
     background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
@@ -2788,6 +2831,7 @@ footer::before {
 
     .checkout-right {
         order: -1;
+        /* Summary on top for mobile */
     }
 
     .order-summary-box {

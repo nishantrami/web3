@@ -142,8 +142,47 @@
         }
 
         @media (max-width: 992px) {
-            .details-container { grid-template-columns: 1fr; }
-            .product-info h1 { font-size: 3rem; }
+            .details-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .product-info h1 {
+                font-size: 3rem;
+            }
+
+            .action-btns {
+                justify-content: center;
+            }
+
+            .details-page {
+                padding-top: 120px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-info h1 {
+                font-size: 2.5rem;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .action-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-large {
+                width: 100%;
+            }
+
+            .product-visual {
+                padding: 30px;
+            }
         }
     </style>
 </head>
@@ -155,15 +194,24 @@
                 <div class="logo">
                     <a href="index.html">Fea<span>ne</span></a>
                 </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html" class="active">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="booking.html">Book Table</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="show-mobile"><a href="menu.html" class="mobile-order-btn">Order Online</a></li>
+                </ul>
                 <div class="nav-extra">
                     <div id="authLinks" class="auth-links"></div>
                     <div class="cart-toggle" onclick="window.location.href='checkout.html'">
                         <i class="fas fa-shopping-bag"></i>
                         <span class="cart-badge" id="cartBadge">0</span>
                     </div>
-                    <a href="index.html" class="back-home-link">
-                        <i class="fas fa-arrow-left"></i> <span>Back to Menu</span>
-                    </a>
+                    <a href="menu.html" class="nav-cta show-desktop">Order Online</a>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </nav>
         </div>

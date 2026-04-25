@@ -637,9 +637,23 @@ tr:last-child td {
         grid-template-columns: 1fr;
     }
 
+    .welcome-banner {
+        padding: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .welcome-text h1 {
+        font-size: 1.8rem !important;
+    }
+
     .table-responsive {
         border-radius: 12px;
         overflow-x: auto;
+    }
+
+    table th, table td {
+        padding: 15px 20px !important;
+        font-size: 0.85rem !important;
     }
 }
 
@@ -672,10 +686,22 @@ tr:last-child td {
 }
 
 #overviewSection .stats-grid {
-    grid-template-columns: repeat(5, 1fr);
-    /* 5 Small side-by-side cards */
+    grid-template-columns: repeat(1, 1fr);
     gap: 15px;
     margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+    #overviewSection .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    #overviewSection .stats-grid {
+        grid-template-columns: repeat(5, 1fr);
+        /* 5 Small side-by-side cards for large screens */
+    }
 }
 
 #overviewSection .stat-card {
