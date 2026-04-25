@@ -1951,11 +1951,27 @@ footer::before {
     .footer-newsletter {
         flex-direction: column;
         text-align: center;
-        padding: 30px;
+        padding: 40px 20px;
+        margin-bottom: 60px;
+    }
+
+    .newsletter-text h3 {
+        font-size: 1.8rem;
     }
 
     .newsletter-form {
         max-width: 100%;
+        width: 100%;
+        flex-direction: column; /* Stack input and button for mobile */
+        gap: 15px;
+    }
+
+    .newsletter-form input {
+        width: 100%;
+        text-align: center;
+    }
+
+    .newsletter-form .btn {
         width: 100%;
     }
 
