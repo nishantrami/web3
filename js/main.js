@@ -228,6 +228,14 @@ window.renderMenuGrid = renderMenuGrid;
 
 // Bridge for cart logic
 window.addToCartFromData = function (name, price, img) {
+    const user = JSON.parse(localStorage.getItem('feane_user'));
+    if (!user) {
+        showToast("Please login to add items to cart!");
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 1500);
+        return;
+    }
     let cart = getCart();
     const existingItem = cart.find(item => item.name === name);
     if (existingItem) {

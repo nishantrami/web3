@@ -1,6 +1,6 @@
 const defaultMenu = [
-    { id: 1, name: 'Monster Burger', description: 'Double flame-grilled patty, cheddar, and our secret beast sauce.', price: 250, category: 'Burger', img: 'img/f1.png' },
-    { id: 2, name: 'Zesty Pizza', description: 'Spicy pepperoni, jalapeños, and premium mozzarella on a thin crust.', price: 350, category: 'Pizza', img: 'img/f2.png' },
+    { id: 1, name: 'Monster Burger', description: 'Double flame-grilled patty, cheddar, and our secret beast sauce.', price: 250, category: 'Burger', img: 'img/f2.png' },
+    { id: 2, name: 'Zesty Pizza', description: 'Spicy pepperoni, jalapeños, and premium mozzarella on a thin crust.', price: 350, category: 'Pizza', img: 'img/f1.png' },
     { id: 3, name: 'Mamma Mia Pizza', description: 'Traditional Italian pepperoni and a drizzle of spicy honey.', price: 450, category: 'Pizza', img: 'img/f3.png' },
     { id: 4, name: 'Creamy Pasta', description: 'Al dente fettuccine tossed in a rich parmesan cream sauce.', price: 150, category: 'Pasta', img: 'img/f4.png' },
     { id: 5, name: 'Golden Fries', description: 'House-cut potatoes triple-fried for maximum crunch.', price: 100, category: 'Fries', img: 'img/f5.png' },
@@ -10,6 +10,24 @@ const defaultMenu = [
 function initMenu() {
     if (!localStorage.getItem('feane_menu')) {
         localStorage.setItem('feane_menu', JSON.stringify(defaultMenu));
+    } else {
+        // Proactive fix for swapped Monster Burger and Zesty Pizza images
+        const currentMenu = JSON.parse(localStorage.getItem('feane_menu'));
+        let changed = false;
+        const updatedMenu = currentMenu.map(item => {
+            if (item.name === 'Monster Burger' && item.img === 'img/f1.png') {
+                changed = true;
+                return { ...item, img: 'img/f2.png' };
+            }
+            if (item.name === 'Zesty Pizza' && item.img === 'img/f2.png') {
+                changed = true;
+                return { ...item, img: 'img/f1.png' };
+            }
+            return item;
+        });
+        if (changed) {
+            localStorage.setItem('feane_menu', JSON.stringify(updatedMenu));
+        }
     }
 }
 

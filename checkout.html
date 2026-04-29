@@ -358,6 +358,11 @@
     <script>
         // Checkout specific logic
         document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('feane_user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
             renderCheckoutItems();
             updateSummary();
             
