@@ -42,24 +42,86 @@
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
     <script>
+        let failedAttempts = parseInt(localStorage.getItem('failedLoginAttempts')) || 0;
+        let lockoutUntil = parseInt(localStorage.getItem('lockoutUntil')) || 0;
+        let timerInterval;
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const btn = document.querySelector('button[type="submit"]');
+            if (lockoutUntil > now) {
+                const remaining = Math.ceil((lockoutUntil - now) / 1000);
+                btn.disabled = true;
+                btn.innerHTML = `Try again in ${remaining}s <i class="fas fa-lock"></i>`;
+                
+                let forgotLink = document.getElementById('forgotPasswordLink');
+                if (!forgotLink) {
+                    const formGroup = document.querySelectorAll('.form-group')[1];
+                    forgotLink = document.createElement('a');
+                    forgotLink.id = 'forgotPasswordLink';
+                    forgotLink.href = '#';
+                    forgotLink.innerText = 'Forgot Password?';
+                    forgotLink.style.display = 'block';
+                    forgotLink.style.marginTop = '10px';
+                    forgotLink.style.color = '#ffbe33';
+                    formGroup.appendChild(forgotLink);
+                }
+            } else {
+                clearInterval(timerInterval);
+                btn.disabled = false;
+                btn.innerHTML = 'Login Now <i class="fas fa-sign-in-alt"></i>';
+                failedAttempts = 0;
+                localStorage.removeItem('failedLoginAttempts');
+                localStorage.removeItem('lockoutUntil');
+                
+                const forgotLink = document.getElementById('forgotPasswordLink');
+                if (forgotLink) forgotLink.remove();
+            }
+        };
+
+        if (lockoutUntil > new Date().getTime()) {
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
+            
+            if (lockoutUntil > new Date().getTime()) {
+                showToast("Too many attempts. Please wait.");
+                return;
+            }
+
             const email = e.target.querySelector('input[type="email"]').value;
             const password = e.target.querySelector('input[type="password"]').value;
             
-            // Simplified for demo: if user types 123 for admin password, let it pass
             const passToCheck = password === '123' ? 'admin123' : password;
             
             const result = auth.login(email, passToCheck);
             if (result.success) {
+                failedAttempts = 0;
+                localStorage.removeItem('failedLoginAttempts');
+                localStorage.removeItem('lockoutUntil');
+
                 if (result.user.role === 'admin') {
                     showToast("Access Denied: Please use the Admin Portal.");
-                    auth.logout(); // Immediate logout for admin on user page
+                    auth.logout(); 
                 } else {
                     window.location.href = 'index.html';
                 }
             } else {
-                showToast(result.message);
+                failedAttempts++;
+                localStorage.setItem('failedLoginAttempts', failedAttempts);
+                
+                if (failedAttempts >= 5) {
+                    lockoutUntil = new Date().getTime() + 23000;
+                    localStorage.setItem('lockoutUntil', lockoutUntil);
+                    timerInterval = setInterval(updateTimer, 1000);
+                    updateTimer();
+                    showToast("Too many failed attempts. Locked out for 23 seconds.");
+                } else {
+                    showToast(result.message + ` (${5 - failedAttempts} attempts left)`);
+                }
             }
         });
     </script>
